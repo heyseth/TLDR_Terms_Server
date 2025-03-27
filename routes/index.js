@@ -26,7 +26,9 @@ router.post('/', async (req, res, next) => {
       const cachedResponse = await Cache.findOne({ tosKey });
       
       if (cachedResponse) {
-        console.log(`Cache hit for tosKey: ${tosKey}`);
+        if (process.env.NODE_ENV !== 'production') {
+          console.log(`Cache hit for tosKey: ${tosKey}`);
+        }
         return res.status(200).json(cachedResponse.response);
       }
     }
